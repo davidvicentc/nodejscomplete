@@ -1,0 +1,11 @@
+extends ../layout.pug
+block contenido
+	div(class="col-md-5 center-block no-float text-left top-space")
+		h1 Login Administradores
+		form(method="post" action="/admin" style="margin-top:1.5em;" name="formulario")
+			div(class="form-group")
+				label Contraseña
+				input(type="password" name="password" placeholder="Contraseña de administrador" class="form-control")
+			div(class="form-group text-right")
+				input(type="submit" id="btn" class="btn btn-info" value="Ingresar")
+	script(src="/js/validar.js")

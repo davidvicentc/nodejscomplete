@@ -1,0 +1,25 @@
+extends ../layout.pug
+block contenido
+	div(class="col-md-12 center-block no-float top-space text-left")
+		h1(class="text-center") Editar Alumno: 
+			= product.title
+		form(method="post" action=("/alumno/" + product.id + "?_method=put") style="margin-top:1.5em;" name="formulario" class="col-md-6 center-block no-float" enctype="multipart/form-data")
+			div(class="form-group")
+				label Nombre
+				input(type="text" name="title" value=(product.title) placeholder=" Nombre del producto" class="form-control")
+			div(class="form-group")
+				label Descripcion del alumno
+				textarea(name="description" placeholder=" Descripcion del producto" class="form-control")
+					=product.description 
+			div(class="form-group")
+				label edad
+				input(type="number" name="price" value=(product.price) placeholder=" Edad del alumno" class="form-control")
+			div(class="form-group")
+				label Imagen
+				input(type="file" name="image_avatar")
+			div(class="form-group")
+				label Contraseña
+				input(type="password" name="password" placeholder=" Contraseña del producto" class="form-control")
+			div(class="form-group text-right")
+				input(type="submit" class="btn btn-info" value="Enviar")
+	script(src="/js/validar.js")
