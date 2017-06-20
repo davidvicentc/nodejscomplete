@@ -3,13 +3,12 @@ block contenido
 	div(class="container")
 		h1 Panel de Administracion
 		table(class="table")
-			caption Alumnos
+			caption fotos
 			thead
 				tr
 					th #
 					th Nombre
 					th Descripcion
-					th Edad
 					th Imagenes
 					th Acciones
 			tbody
@@ -18,9 +17,8 @@ block contenido
 						td= product.id
 						td= product.title
 						td= product.description
-						td= product.price
 						td
-							a(href=(product.imageUrl)) Ver imagen
+							a(href=(product.imageUrl)) Ver foto
 						td 
 							a(href=("/alumno/edit/" + product.id)) Editar
 							=" - "

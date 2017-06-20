@@ -1,10 +1,11 @@
 extends ../layout.pug
 block contenido
 	div(class="center-block text-center bounceIn")
-		h1(class="pacifico big blue") Alumnos
-		p Alumnos de liceo 29 de junio
+		h1(class="pacifico big blue") fotos
+		p fotos de liceo 29 de junio
 		each product in products
 			div(class="col-m-4 col-sm-12 col-xs-12 inline block")
 				h2(class="pacifico")= product.title
 				img(src=(product.imageUrl) class="no-float" width="200")
+				p= product.description
 				p(style="margin-top:1em;") #[small(class="lato small") #{product.price} Años ]

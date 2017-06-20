@@ -6,6 +6,7 @@ var multer = require('multer');
 var cloudinary = require('cloudinary');
 var method_override = require("method-override");
 var app_password = "123456789";
+var port = process.env.PORT || 8080;
 
 //configuarion del api de cloudinary
 cloudinary.config({
@@ -29,8 +30,7 @@ mongoose.connect("mongodb://localhost/primera_pagina");
 var productSchema = {
 	title:String,
 	description:String,
-	imageUrl:String,
-	price:Number
+	imageUrl:String
 };
 
 var Product = mongoose.model("Product", productSchema); //crear el modelo
@@ -45,33 +45,32 @@ app.get("/", function(solicitud,respuesta){
 	respuesta.render("index");
 });
 
-app.get("/alumno",function(solicitud,respuesta){
+app.get("/fotos",function(solicitud,respuesta){
 	Product.find(function(error,documento){
 		if(error){console.log(error); }
-		respuesta.render("alumno/index",{ products: documento })
+		respuesta.render("fotos/index",{ products: documento })
 	}); 
 });
 
-app.get("/alumno/edit/:id",function(solicitud,respuesta){
+app.get("/fotos/edit/:id",function(solicitud,respuesta){
 	 var id_producto = solicitud.params.id;
 	 
 	 Product.findById({"_id": id_producto}, function(error, producto){
 		console.log(producto);
-		respuesta.render("alumno/edit", { product: producto });
+		respuesta.render("fotos/edit", { product: producto });
 	});
 	
 });
 
-app.put("/alumno/:id",function(solicitud,respuesta){
+app.put("/fotos/:id",function(solicitud,respuesta){
 	if(solicitud.body.password == app_password){
 		var data = {
 		title: solicitud.body.title,
-		description: solicitud.body.description,
-		price: solicitud.body.price
+		description: solicitud.body.description
 		};
 
 		Product.update({"_id": solicitud.params.id},data,function(Product){
-			respuesta.redirect("/alumno");
+			respuesta.redirect("/fotos");
 		});
 	}else{
 		respuesta.redirect("/");
@@ -94,19 +93,16 @@ app.post("/admin",function(solicitud,respuesta){
 
 });
 
-app.get("/alumno/new", function(solicitud,respuesta){
-	respuesta.render("alumno/new");
+app.get("/fotos/new", function(solicitud,respuesta){
+	respuesta.render("fotos/new");
 });
 
-app.post("/alumno", function(solicitud,respuesta){
+app.post("/fotos", function(solicitud,respuesta){
 	//si se pone la contraseña que esta dentro del "" se enviara al index
-	if(solicitud.body.password == app_password){
-
 	var data = {
 		title: solicitud.body.title,
 		description: solicitud.body.description,
-		imageUrl: "data.png",
-		price: solicitud.body.price
+		imageUrl: "data.png"
 	}
 	
 	var product = new Product(data);
@@ -115,29 +111,25 @@ app.post("/alumno", function(solicitud,respuesta){
 			product.imageUrl = result.url;
 
 			product.save(function(err){ //imprimir el producto
-			respuesta.redirect("alumno");
+			respuesta.redirect("fotos");
 				console.log(product);
 			});
 		}
 	);
 
 	//si no se coloca la contraseña recargara la pagina
-	}else{
-		respuesta.render("alumno/new");
-		console.log("colocar la contraseña");
-	}
 
 });
 
-app.get("/alumno/delete/:id",function(solicitud,respuesta){
+app.get("/fotos/delete/:id",function(solicitud,respuesta){
 	var id = solicitud.params.id;
 
 	Product.findById({"_id": id},function(error,producto){
-		respuesta.render("alumno/delete", { product: producto })
+		respuesta.render("fotos/delete", { product: producto })
 	})
 });
 
-app.delete("/alumno/:id",function(solicitud,respuesta){
+app.delete("/fotos/:id",function(solicitud,respuesta){
 	var id = solicitud.params.id;
 		Product.remove({"_id": id},function(err){
 			if(err){console.log(err); }
@@ -147,4 +139,4 @@ app.delete("/alumno/:id",function(solicitud,respuesta){
 });
 
 //puerto
-app.listen(8080);
+app.listen(port, console.log("corriendo en el puerto " + port));

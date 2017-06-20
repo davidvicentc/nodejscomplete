@@ -1,0 +1,18 @@
+extends ../layout.pug
+block contenido
+	div(class="col-md-5 center-block no-float top-space text-left")
+		h1(class="text-center") Agregar foto
+		form(method="post" action="/fotos" name="formulario" style="margin-top:1.5em;" enctype="multipart/form-data")
+			div(class="form-group")
+				label Nombre
+				input(type="text" name="title" placeholder=" titulo de la foto" class="form-control")
+			div(class="form-group")
+				label Descripcion de la foto
+				textarea(name="description" placeholder=" Descripcion de la foto" class="form-control")
+			div(class="form-group")
+				label Imagen
+				input(type="file" name="image_avatar")
+			div(class="form-group text-right")
+				input(type="submit" id="btn" class="btn btn-info" value="Enviar")
+	script(src="../js/validar.js")
+				
