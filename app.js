@@ -24,7 +24,9 @@ app.use(method_override("_method"));
 
 //conexion a la base de datos
 mongoose.Promise = global.Promise; //reglas de mongoose "no he investigado que significa"
-mongoose.createConnection("mongodb://djassiel:j10377954@ds040027.mlab.com:40027/promoxi");
+mongoose.createConnection("mongodb://djassiel:j10377954@ds040027.mlab.com:40027/promoxi", {
+	useMongoClient: true
+});
 
 //definir schema de los productos
 var productSchema = {
